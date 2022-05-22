@@ -109,3 +109,4 @@ D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.pdb
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.ModifyUsers.resources
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.csproj.GenerateResource.cache
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateCursos.resources
+D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateGrupos.resources
