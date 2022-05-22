@@ -106,3 +106,5 @@ D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.csproj.
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.csproj.CopyComplete
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.dll
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.pdb
+D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.ModifyUsers.resources
+D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.csproj.GenerateResource.cache
