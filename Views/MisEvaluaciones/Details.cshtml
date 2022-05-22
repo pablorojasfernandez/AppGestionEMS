@@ -1,17 +1,17 @@
 ﻿@model AppGestionEMS.Models.Evaluaciones
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
     <h4>Evaluaciones</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Curso.Anyo)
+            Curso
         </dt>
 
         <dd>
@@ -19,7 +19,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.Name)
+            Grupo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grupo.Nombre)
+        </dd>
+
+        <dt>
+            Usuario
         </dt>
 
         <dd>
@@ -27,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Convocatoria)
+            Convocatoria
         </dt>
 
         <dd>
@@ -35,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NotaMediaTeoria)
+            Nota Media Teoria
         </dt>
 
         <dd>
@@ -43,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NotaMediaPractica)
+            Nota Media Practica
         </dt>
 
         <dd>
@@ -51,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NotaMediaFinal)
+            Nota Final
         </dt>
 
         <dd>
@@ -61,5 +69,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a la lista", "Index")
 </p>

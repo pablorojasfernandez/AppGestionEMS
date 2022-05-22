@@ -1,36 +1,36 @@
 ﻿@model IEnumerable<AppGestionEMS.Models.Evaluaciones>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Evaluacion";
 }
 
-<h2>Index</h2>
+<h2>Evaluacion</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Curso.Anyo)
+            Curso
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Grupo.Nombre)
+            Grupo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            Usuario
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Convocatoria)
+            Convocatoria
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaTeoria)
+            Nota Media Teoria
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaPractica)
+            Nota Media Practica
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaFinal)
+            Nota Final
         </th>
         <th></th>
     </tr>
@@ -59,9 +59,9 @@
             @Html.DisplayFor(modelItem => item.NotaMediaFinal)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

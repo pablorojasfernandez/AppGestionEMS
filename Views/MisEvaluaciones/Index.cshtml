@@ -1,61 +1,65 @@
 ﻿@model IEnumerable<AppGestionEMS.Models.Evaluaciones>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Evaluacion";
 }
 
-<h2>Index</h2>
+<h2>Evaluacion</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Curso.Anyo)
+            Curso
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            Grupo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Convocatoria)
+            Usuario
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaTeoria)
+            Convocatoria
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaPractica)
+            Nota Media Teoria
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NotaMediaFinal)
+            Nota Media Practica
+        </th>
+        <th>
+            Nota Final
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Curso.Anyo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Convocatoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotaMediaTeoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotaMediaPractica)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NotaMediaFinal)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curso.Anyo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grupo.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Convocatoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaMediaTeoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaMediaPractica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaMediaFinal)
+            </td>
+            <td>
+                @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
