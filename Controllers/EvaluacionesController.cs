@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AppGestionEMS.Controllers
 {
-    [Authorize(Roles ="admin,profesor")]
+    [Authorize(Roles = "admin,profesor")]
     public class EvaluacionesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -31,11 +31,11 @@ namespace AppGestionEMS.Controllers
                 var alumnos = from usuario in db.Users
                               from u_r in usuario.Roles
                               join rol in db.Roles on u_r.RoleId equals rol.Id
-                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
-                              where rol.Name == "alumno" && grupos.Any(g => g == mat.GrupoId)
+                              join ev in db.Evaluaciones on usuario.Id equals ev.UserId
+                              where rol.Name == "alumno" && grupos.Any(g => g == ev.GrupoId)
                               select usuario.Id;
 
-                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User).Where(a => alumnos.Contains(a.UserId));
+                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.Grupo).Include(e => e.User).Where(a => alumnos.Contains(a.UserId) && grupos.Contains(a.GrupoId));
             }
             else
             {
@@ -46,7 +46,7 @@ namespace AppGestionEMS.Controllers
                               where rol.Name == "alumno"
                               select usuario.Id;
 
-                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User).Where(a => alumnos.Contains(a.UserId));
+                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.Grupo).Include(e => e.User).Where(a => alumnos.Contains(a.UserId));
             }
 
             return View(evaluaciones.ToList());
@@ -84,9 +84,10 @@ namespace AppGestionEMS.Controllers
                               join rol in db.Roles on u_r.RoleId equals rol.Id
                               join mat in db.Matriculaciones on usuario.Id equals mat.UserId
                               where rol.Name == "alumno" && grupos.Any(g => g == mat.GrupoId)
-                              select usuario.UserName;
+                              select usuario.Id;
 
-                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name");
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name");
+                ViewBag.GrupoId = new SelectList(db.Grupos.Where(g => grupos.Contains(g.Id)), "Id", "Nombre");
             }
             else
             {
@@ -95,11 +96,11 @@ namespace AppGestionEMS.Controllers
                               join rol in db.Roles on u_r.RoleId equals rol.Id
                               join mat in db.Matriculaciones on usuario.Id equals mat.UserId
                               where rol.Name == "alumno"
-                              select usuario.UserName;
+                              select usuario.Id;
 
-                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name");
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name");
+                ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre");
             }
-            
 
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo");
             return View();
@@ -110,7 +111,7 @@ namespace AppGestionEMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,CursoId,Convocatoria,NotaMediaTeoria,NotaMediaPractica,NotaMediaFinal")] Evaluaciones evaluaciones)
+        public ActionResult Create([Bind(Include = "Id,UserId,CursoId,GrupoId,Convocatoria,NotaMediaTeoria,NotaMediaPractica,NotaMediaFinal")] Evaluaciones evaluaciones)
         {
             if (ModelState.IsValid)
             {
@@ -119,6 +120,7 @@ namespace AppGestionEMS.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", evaluaciones.GrupoId);
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo", evaluaciones.CursoId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Name", evaluaciones.UserId);
             return View(evaluaciones);
@@ -136,8 +138,39 @@ namespace AppGestionEMS.Controllers
             {
                 return HttpNotFound();
             }
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno" && grupos.Any(g => g == mat.GrupoId)
+                              select usuario.Id;
+
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name", evaluaciones.UserId);
+                ViewBag.GrupoId = new SelectList(db.Grupos.Where(g => grupos.Contains(g.Id)), "Id", "Nombre", evaluaciones.GrupoId);
+            }
+            else
+            {
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno"
+                              select usuario.Id;
+
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name", evaluaciones.UserId);
+                ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", evaluaciones.GrupoId);
+            }
+
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo", evaluaciones.CursoId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name", evaluaciones.UserId);
             return View(evaluaciones);
         }
 
@@ -146,7 +179,7 @@ namespace AppGestionEMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,CursoId,Convocatoria,NotaMediaTeoria,NotaMediaPractica,NotaMediaFinal")] Evaluaciones evaluaciones)
+        public ActionResult Edit([Bind(Include = "Id,UserId,CursoId,GrupoId,Convocatoria,NotaMediaTeoria,NotaMediaPractica,NotaMediaFinal")] Evaluaciones evaluaciones)
         {
             if (ModelState.IsValid)
             {
@@ -154,6 +187,7 @@ namespace AppGestionEMS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", evaluaciones.GrupoId);
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo", evaluaciones.CursoId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Name", evaluaciones.UserId);
             return View(evaluaciones);

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppGestionEMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AppGestionEMS.Controllers
 {
@@ -18,7 +19,8 @@ namespace AppGestionEMS.Controllers
         // GET: Evaluaciones
         public ActionResult Index()
         {
-            var evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User);
+            string currentUserId = User.Identity.GetUserId();
+            var evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User).Where(p => p.UserId == currentUserId);
             return View(evaluaciones.ToList());
         }
 

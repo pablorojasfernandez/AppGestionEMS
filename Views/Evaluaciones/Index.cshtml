@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Curso.Anyo)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Grupo.Nombre)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.User.Name)
         </th>
         <th>
@@ -36,6 +39,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Curso.Anyo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grupo.Nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.User.Name)

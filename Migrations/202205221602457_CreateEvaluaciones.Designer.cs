@@ -13,7 +13,7 @@ namespace AppGestionEMS.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202205221341118_CreateEvaluaciones"; }
+            get { return "202205221602457_CreateEvaluaciones"; }
         }
         
         string IMigrationMetadata.Source

@@ -21,6 +21,9 @@ namespace AppGestionEMS.Models
         public int CursoId { get; set; }
         public virtual Cursos Curso { get; set; }
 
+        public int GrupoId { get; set; }
+        public virtual Grupos Grupo { get; set; }
+
         public ConvocatoriaType Convocatoria { get; set; }
 
         public float? NotaMediaTeoria { get; set; }
