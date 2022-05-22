@@ -21,7 +21,21 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Gestion de Cursos", "Index", "Cursos")</li>
+                        <li>@Html.ActionLink("Gestion de Grupos", "Index", "Grupos")</li>
+                        <li>@Html.ActionLink("Asignacion Docente", "Index", "AsignacionDocentes")</li>
+                    }
+                    @if (User.IsInRole("admin") || User.IsInRole("profesor"))
+                    {
+                        <li>@Html.ActionLink("Matriculaciones", "Index", "Matriculaciones")</li>
+                        <li>@Html.ActionLink("Evaluaciones", "Index", "Evaluaciones")</li>
+                    }
+                    @if (User.IsInRole("alumno"))
+                    {
+                        <li>@Html.ActionLink("Mis Evaluaciones", "Index", "MisEvaluaciones")</li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

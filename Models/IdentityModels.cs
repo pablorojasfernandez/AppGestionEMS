@@ -32,5 +32,7 @@ namespace AppGestionEMS.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<AppGestionEMS.Models.Cursos> Cursos { get; set; }
     }
 }
