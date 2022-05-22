@@ -1,0 +1,72 @@
+﻿@model AppGestionEMS.Models.Evaluaciones
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Evaluaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso.Anyo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso.Anyo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Convocatoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Convocatoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaTeoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaTeoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaPractica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaPractica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaFinal)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

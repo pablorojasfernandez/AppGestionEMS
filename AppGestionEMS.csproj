@@ -170,6 +170,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AsignacionDocentesController.cs" />
     <Compile Include="Controllers\CursosController.cs" />
+    <Compile Include="Controllers\MisEvaluacionesController.cs" />
+    <Compile Include="Controllers\EvaluacionesController.cs" />
     <Compile Include="Controllers\GruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -197,9 +199,14 @@
     <Compile Include="Migrations\202205221206126_CreateMatriculaciones.Designer.cs">
       <DependentUpon>202205221206126_CreateMatriculaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205221341118_CreateEvaluaciones.cs" />
+    <Compile Include="Migrations\202205221341118_CreateEvaluaciones.Designer.cs">
+      <DependentUpon>202205221341118_CreateEvaluaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AsignacionDocente.cs" />
+    <Compile Include="Models\Evaluaciones.cs" />
     <Compile Include="Models\Matriculaciones.cs" />
     <Compile Include="Models\Grupos.cs" />
     <Compile Include="Models\Cursos.cs" />
@@ -284,6 +291,13 @@
     <Content Include="Views\Matriculaciones\Details.cshtml" />
     <Content Include="Views\Matriculaciones\Edit.cshtml" />
     <Content Include="Views\Matriculaciones\Index.cshtml" />
+    <Content Include="Views\Evaluaciones\Create.cshtml" />
+    <Content Include="Views\Evaluaciones\Delete.cshtml" />
+    <Content Include="Views\Evaluaciones\Details.cshtml" />
+    <Content Include="Views\Evaluaciones\Edit.cshtml" />
+    <Content Include="Views\Evaluaciones\Index.cshtml" />
+    <Content Include="Views\MisEvaluaciones\Details.cshtml" />
+    <Content Include="Views\MisEvaluaciones\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -316,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205221206126_CreateMatriculaciones.resx">
       <DependentUpon>202205221206126_CreateMatriculaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205221341118_CreateEvaluaciones.resx">
+      <DependentUpon>202205221341118_CreateEvaluaciones.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

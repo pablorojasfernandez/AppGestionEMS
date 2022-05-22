@@ -1,0 +1,65 @@
+﻿@model AppGestionEMS.Models.Evaluaciones
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evaluaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso.Anyo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso.Anyo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Convocatoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Convocatoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaTeoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaTeoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaPractica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaPractica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NotaMediaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NotaMediaFinal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

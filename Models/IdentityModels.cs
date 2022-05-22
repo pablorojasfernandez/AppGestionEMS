@@ -40,5 +40,7 @@ namespace AppGestionEMS.Models
         public System.Data.Entity.DbSet<AppGestionEMS.Models.AsignacionDocente> AsignacionDocentes { get; set; }
 
         public System.Data.Entity.DbSet<AppGestionEMS.Models.Matriculaciones> Matriculaciones { get; set; }
+
+        public System.Data.Entity.DbSet<AppGestionEMS.Models.Evaluaciones> Evaluaciones { get; set; }
     }
 }

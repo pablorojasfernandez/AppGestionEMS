@@ -112,3 +112,4 @@ D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrati
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateGrupos.resources
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateAsignacionDocente.resources
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateMatriculaciones.resources
+D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateEvaluaciones.resources
