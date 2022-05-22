@@ -40,9 +40,15 @@ namespace AppGestionEMS.Controllers
         // GET: AsignacionDocentes/Create
         public ActionResult Create()
         {
+            var profesores = from usuario in db.Users
+                         from u_r in usuario.Roles
+                         join rol in db.Roles on u_r.RoleId equals rol.Id
+                         where rol.Name == "profesor"
+                         select usuario.UserName;
+
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo");
             ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(u => profesores.Contains(u.UserName)), "Id", "Name");
             return View();
         }
 
@@ -69,6 +75,12 @@ namespace AppGestionEMS.Controllers
         // GET: AsignacionDocentes/Edit/5
         public ActionResult Edit(int? id)
         {
+            var profesores = from usuario in db.Users
+                             from u_r in usuario.Roles
+                             join rol in db.Roles on u_r.RoleId equals rol.Id
+                             where rol.Name == "profesor"
+                             select usuario.UserName;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,7 +92,7 @@ namespace AppGestionEMS.Controllers
             }
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo", asignacionDocente.CursoId);
             ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", asignacionDocente.GrupoId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name", asignacionDocente.UserId);
+            ViewBag.UserId = new SelectList(db.Users.Where(u => profesores.Contains(u.UserName)), "Id", "Name", asignacionDocente.UserId);
             return View(asignacionDocente);
         }
 
