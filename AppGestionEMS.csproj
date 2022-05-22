@@ -298,6 +298,7 @@
     <Content Include="Views\Evaluaciones\Details.cshtml" />
     <Content Include="Views\Evaluaciones\Edit.cshtml" />
     <Content Include="Views\Evaluaciones\Index.cshtml" />
+    <Content Include="Views\Home\MisDatos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

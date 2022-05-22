@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AppGestionEMS.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,13 @@ namespace AppGestionEMS.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext _application;
+
+        public HomeController()
+        {
+            _application = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -25,6 +34,12 @@ namespace AppGestionEMS.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult MisDatos()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            return View(_application.Users.Where(u =>  currentUserId == u.Id).ToList());
         }
     }
 }
