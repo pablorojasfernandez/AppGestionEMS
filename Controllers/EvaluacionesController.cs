@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppGestionEMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AppGestionEMS.Controllers
 {
@@ -18,7 +19,36 @@ namespace AppGestionEMS.Controllers
         // GET: Evaluaciones
         public ActionResult Index()
         {
-            var evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User);
+            IQueryable<Evaluaciones> evaluaciones;
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno" && grupos.Any(g => g == mat.GrupoId)
+                              select usuario.Id;
+
+                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User).Where(a => alumnos.Contains(a.UserId));
+            }
+            else
+            {
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno"
+                              select usuario.Id;
+
+                evaluaciones = db.Evaluaciones.Include(e => e.Curso).Include(e => e.User).Where(a => alumnos.Contains(a.UserId));
+            }
+
             return View(evaluaciones.ToList());
         }
 
@@ -40,8 +70,38 @@ namespace AppGestionEMS.Controllers
         // GET: Evaluaciones/Create
         public ActionResult Create()
         {
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno" && grupos.Any(g => g == mat.GrupoId)
+                              select usuario.UserName;
+
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name");
+            }
+            else
+            {
+                var alumnos = from usuario in db.Users
+                              from u_r in usuario.Roles
+                              join rol in db.Roles on u_r.RoleId equals rol.Id
+                              join mat in db.Matriculaciones on usuario.Id equals mat.UserId
+                              where rol.Name == "alumno"
+                              select usuario.UserName;
+
+                ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name");
+            }
+            
+
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Name");
             return View();
         }
 

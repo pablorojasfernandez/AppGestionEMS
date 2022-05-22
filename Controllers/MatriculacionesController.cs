@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppGestionEMS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AppGestionEMS.Controllers
 {
@@ -18,7 +19,21 @@ namespace AppGestionEMS.Controllers
         // GET: Matriculaciones
         public ActionResult Index()
         {
-            var matriculaciones = db.Matriculaciones.Include(m => m.Curso).Include(m => m.Grupo).Include(m => m.User);
+            IQueryable<Matriculaciones> matriculaciones;
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+                matriculaciones = db.Matriculaciones.Include(m => m.Curso).Include(m => m.Grupo).Include(m => m.User).Where(g => grupos.Contains(g.GrupoId));
+            }
+            else
+            {
+                matriculaciones = db.Matriculaciones.Include(m => m.Curso).Include(m => m.Grupo).Include(m => m.User);
+            }
+
             return View(matriculaciones.ToList());
         }
 
@@ -44,11 +59,25 @@ namespace AppGestionEMS.Controllers
                              from u_r in usuario.Roles
                              join rol in db.Roles on u_r.RoleId equals rol.Id
                              where rol.Name == "alumno"
-                             select usuario.UserName;
+                             select usuario.Id;
+
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+
+                ViewBag.GrupoId = new SelectList(db.Grupos.Where(g => grupos.Contains(g.Id)), "Id", "Nombre");
+            }
+            else
+            {
+                ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre");
+            }
 
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo");
-            ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre");
-            ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name");
             return View();
         }
 
@@ -80,7 +109,7 @@ namespace AppGestionEMS.Controllers
                           from u_r in usuario.Roles
                           join rol in db.Roles on u_r.RoleId equals rol.Id
                           where rol.Name == "alumno"
-                          select usuario.UserName;
+                          select usuario.Id;
 
             if (id == null)
             {
@@ -91,9 +120,23 @@ namespace AppGestionEMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (User.IsInRole("profesor"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                var grupos = from usuario in db.Users
+                             join ad in db.AsignacionDocentes on usuario.Id equals ad.UserId
+                             where usuario.Id == currentUserId
+                             select ad.GrupoId;
+
+                ViewBag.GrupoId = new SelectList(db.Grupos.Where(g => grupos.Contains(g.Id)), "Id", "Nombre");
+            }
+            else
+            {
+                ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", matriculaciones.GrupoId);
+            }
             ViewBag.CursoId = new SelectList(db.Cursos, "Id", "Anyo", matriculaciones.CursoId);
-            ViewBag.GrupoId = new SelectList(db.Grupos, "Id", "Nombre", matriculaciones.GrupoId);
-            ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.UserName)), "Id", "Name", matriculaciones.UserId);
+            ViewBag.UserId = new SelectList(db.Users.Where(u => alumnos.Contains(u.Id)), "Id", "Name", matriculaciones.UserId);
             return View(matriculaciones);
         }
 
