@@ -111,3 +111,4 @@ D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.csproj.
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateCursos.resources
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateGrupos.resources
 D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateAsignacionDocente.resources
+D:\EMS\AppGestionEMS\AppGestionEMS\AppGestionEMS\obj\Debug\AppGestionEMS.Migrations.CreateMatriculaciones.resources
